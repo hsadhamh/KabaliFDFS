@@ -1,4 +1,4 @@
-package factor.app.fdfs;
+package factor.app.fdfs.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,28 +7,33 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseBooleanArray;
-import android.view.ActionMode;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.github.clans.fab.FloatingActionButton;
 import com.rey.material.widget.ListView;
 import com.rey.material.widget.Spinner;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnItemSelected;
+import butterknife.OnClick;
+import factor.app.fdfs.providers.FdfsDataProvider;
+import factor.app.fdfs.R;
+import factor.app.fdfs.adapters.CinemasAdapter;
+import factor.app.fdfs.adapters.MoviesSpinnerAdapter;
+import factor.app.fdfs.models.CinemaInfo;
+import factor.app.fdfs.models.MovieInTheatresInfo;
+import factor.app.fdfs.models.MovieInfo;
 
 public class FdfsMainActivity extends AppCompatActivity {
 
@@ -43,6 +48,8 @@ public class FdfsMainActivity extends AppCompatActivity {
     Spinner mSpinnerMovies;
     @BindView(R.id.spinner_cinemas)
     ListView mSpinnerCinemas;
+    @BindView(R.id.id_fab_next_screen)
+    FloatingActionButton fabNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +123,7 @@ public class FdfsMainActivity extends AppCompatActivity {
                     Collections.sort(mListMovies, new Comparator<MovieInfo>() {
                         @Override
                         public int compare(MovieInfo o1, MovieInfo o2) {
-                            return o1.Name.compareTo(o2.Name);
+                            return o1.getName().compareTo(o2.getName());
                         }
                     });
                 }
@@ -172,5 +179,39 @@ public class FdfsMainActivity extends AppCompatActivity {
             dialog.dismiss();
         }
 
+    }
+
+    @OnClick(R.id.id_fab_next_screen)
+    public void onClickFab(){
+        MovieInTheatresInfo movieTheatre = new MovieInTheatresInfo();
+        CinemasAdapter cineAdpater = (CinemasAdapter) mSpinnerCinemas.getAdapter();
+        if(cineAdpater ==null || cineAdpater.getSelectedIds() == null) return;
+
+        for(int i=0; i < cineAdpater.getSelectedIds().size(); i++) {
+            if(cineAdpater.getSelectedIds().get(i)){
+                movieTheatre.getCinemas().add(cineAdpater.getListMovies().get(i));
+            }
+        }
+
+        int nPos = mSpinnerMovies.getSelectedItemPosition();
+        movieTheatre.setMovie(mListMovies.get(nPos));
+        movieTheatre.setCity(mCityName);
+        movieTheatre.setDate("20160722");
+
+        if(!movieTheatre.getCinemas().isEmpty()) {
+            try {
+                String s = FdfsDataProvider.getSavedInfoString(movieTheatre);
+                FdfsDataProvider.writeToFile(getApplicationContext(),s);
+
+                Intent i = new Intent();
+                i.setClass(this, BackgroundCheckActivity.class);
+                startActivity(i);
+
+                FdfsDataProvider.scheduleAlarm(getApplicationContext());
+                finish();
+            } catch (JSONException | IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -1,4 +1,4 @@
-package factor.app.fdfs;
+package factor.app.fdfs.adapters;
 
 
 import android.content.Context;
@@ -9,17 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
 
 import com.rey.material.widget.CheckBox;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import factor.app.fdfs.models.CinemaInfo;
+import factor.app.fdfs.R;
 
 /**
  * Created by hassanhussain on 7/16/2016.
@@ -27,6 +25,11 @@ import butterknife.OnClick;
 public class CinemasAdapter extends ArrayAdapter<CinemaInfo> {
     private SparseBooleanArray mSelectedItemsIds;
     Context mContext;
+
+    public ArrayList<CinemaInfo> getListMovies() {
+        return mListMovies;
+    }
+
     ArrayList<CinemaInfo> mListMovies = new ArrayList<>();
     LayoutInflater mInflater;
 

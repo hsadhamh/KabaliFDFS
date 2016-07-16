@@ -1,22 +1,20 @@
-package factor.app.fdfs;
+package factor.app.fdfs.adapters;
 
 import android.content.Context;
 import android.text.Html;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import factor.app.fdfs.models.MovieInfo;
+import factor.app.fdfs.R;
 
 /**
  * Created by hassanhussain on 7/16/2016.
@@ -47,8 +45,9 @@ public class MoviesSpinnerAdapter extends ArrayAdapter<MovieInfo> {
             Object obj =  view.getTag();
             if(obj instanceof MoviesHolder) {
                 MoviesHolder holder = (MoviesHolder) obj;
-                String movieShow = "<b>" + movie.Name + "</b>, " + "<i>" + (movie.isRunning ? "[Running Now]" : "[" + movie.releaseDate + "]") + "</i>";
-                movieShow += "; " + movie.languages.toString();
+                String movieShow = "<b>" + movie.getName() + "</b>, " + "<i>" +
+                        (movie.isRunning() ? "[Running Now]" : "[" + movie.getReleaseDate() + "]") + "</i>";
+                movieShow += "; " + movie.getLanguages().toString();
                 holder.mTxt.setText(Html.fromHtml(movieShow));
             }
         }
@@ -63,8 +62,9 @@ public class MoviesSpinnerAdapter extends ArrayAdapter<MovieInfo> {
         TextView mTxt = (TextView)convertView.findViewById(R.id.id_txt_show_movie);
         MovieInfo movie = getItem(position);
 
-        String movieShow = "<b>" + movie.Name + "</b>, " + "<i>" + (movie.isRunning ? "[Running Now]" : "[" + movie.releaseDate + "]") + "</i>";
-        movieShow += "; " + movie.languages.toString();
+        String movieShow = "<b>" + movie.getName() + "</b>, " + "<i>"
+                + (movie.isRunning() ? "[Running Now]" : "[" + movie.getReleaseDate() + "]") + "</i>";
+        movieShow += "; " + movie.getLanguages().toString();
         mTxt.setText(Html.fromHtml(movieShow));
         return convertView;
     }

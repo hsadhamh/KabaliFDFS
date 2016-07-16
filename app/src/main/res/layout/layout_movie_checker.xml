@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:id="@+id/id_view_holder"
+    android:layout_height="wrap_content">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="5">
+
+        <com.rey.material.widget.TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center|start"
+            android:padding="2dp"
+            android:text="Text Movie"
+            android:textSize="16sp"
+            android:id="@+id/id_txt_theatre_name"
+            android:textStyle="bold" />
+        <com.rey.material.widget.TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/id_txt_theatre_info"
+            android:gravity="center|start"
+            android:layout_gravity="center"
+            android:padding="2dp"
+            android:text="Status_In_Theatre"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+    <com.rey.material.widget.ProgressView
+        android:padding="15dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        custom:pv_autostart="true"
+        custom:pv_circular="true"
+        custom:pv_progressStyle="@style/Material.Drawable.CircularProgress"
+        custom:pv_progressMode="indeterminate"
+        android:layout_weight="1"
+        android:id="@+id/id_progress_theatre" />
+</LinearLayout>
