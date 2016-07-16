@@ -53,15 +53,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=" Select a Cinema:" />
-    <com.rey.material.widget.Spinner
-        android:id="@+id/spinner_cinemas"
-        style="@style/Material.Widget.Spinner"
+    <com.rey.material.widget.ListView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="match_parent"
+        android:id="@+id/spinner_cinemas"
         android:gravity="center|start"
         custom:rd_style="@style/Material.Drawable.Ripple.Wave"
-        android:layout_gravity="center"
-        android:spinnerMode="dialog"
-        android:minHeight="40dp" />
+        android:layout_gravity="center"/>
 
 </LinearLayout>

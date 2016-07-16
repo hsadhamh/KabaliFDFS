@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <com.rey.material.widget.CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center|start"
+        android:gravity="center|start"
+        android:id="@+id/id_check_box_item"
+        android:minHeight="?android:attr/listPreferredItemHeight" />
+
+    <com.rey.material.widget.TextView
+        android:id="@+id/id_txt_show_cinema"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:padding="3dp"
+        android:gravity="center|start"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:textColor="@android:color/black" />
+
+    </LinearLayout>

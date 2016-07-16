@@ -3,6 +3,7 @@ package factor.app.fdfs;
 import android.content.Context;
 import android.text.Html;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,17 +16,20 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by hassanhussain on 7/16/2016.
  */
 public class MoviesSpinnerAdapter extends ArrayAdapter<MovieInfo> {
+
     Context mContext;
     ArrayList<MovieInfo> mListMovies = new ArrayList<>();
     LayoutInflater mInflater;
 
     public MoviesSpinnerAdapter(Context context, int textViewResourceId, ArrayList<MovieInfo> objects) {
         super(context, textViewResourceId, objects);
+
         this.mContext = context;
         this.mListMovies.addAll(objects);
         mInflater = (LayoutInflater.from(context));
