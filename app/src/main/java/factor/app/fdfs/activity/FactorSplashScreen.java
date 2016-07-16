@@ -47,6 +47,7 @@ public class FactorSplashScreen extends AppCompatActivity {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             if(fileExits) {
+                FdfsDataProvider.scheduleAlarm(getApplicationContext());
                 Intent i = new Intent(FactorSplashScreen.this, BackgroundCheckActivity.class);
                 startActivity(i);
             }

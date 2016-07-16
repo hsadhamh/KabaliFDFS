@@ -13,16 +13,22 @@ import android.widget.ArrayAdapter;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.clans.fab.FloatingActionButton;
+import com.rey.material.widget.ImageButton;
 import com.rey.material.widget.ListView;
 import com.rey.material.widget.Spinner;
+import com.rey.material.widget.TextView;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.json.JSONException;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,6 +56,10 @@ public class FdfsMainActivity extends AppCompatActivity {
     ListView mSpinnerCinemas;
     @BindView(R.id.id_fab_next_screen)
     FloatingActionButton fabNext;
+    @BindView(R.id.btn_calendar_click)
+    ImageButton calendar;
+    @BindView(R.id.txt_booking_date)
+    TextView mTxtDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +80,13 @@ public class FdfsMainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(Spinner parent, View view, int position, long id) {
                 SelectedCity(position);
+            }
+        });
+
+        calendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
@@ -196,7 +213,9 @@ public class FdfsMainActivity extends AppCompatActivity {
         int nPos = mSpinnerMovies.getSelectedItemPosition();
         movieTheatre.setMovie(mListMovies.get(nPos));
         movieTheatre.setCity(mCityName);
-        movieTheatre.setDate("20160722");
+        String dateString = (String) mTxtDate.getText();
+        String [] dates = dateString.split("-");
+        movieTheatre.setDate(dates[2] + dates[1] +  dates[0]);
 
         if(!movieTheatre.getCinemas().isEmpty()) {
             try {
@@ -213,5 +232,24 @@ public class FdfsMainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    @OnClick(R.id.btn_calendar_click)
+    public void ShowDatePicker(){
+        final Calendar c = Calendar.getInstance();
+        int mYear = c.get(Calendar.YEAR);
+        int mMonth = c.get(Calendar.MONTH);
+        int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+        android.app.DatePickerDialog datePickerDialog = new android.app.DatePickerDialog(getApplicationContext(),
+                new android.app.DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(android.widget.DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        mTxtDate.setText(String.format("%02d", dayOfMonth) + "-" + String.format("%02d", monthOfYear + 1) + "-" + year);
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
     }
 }

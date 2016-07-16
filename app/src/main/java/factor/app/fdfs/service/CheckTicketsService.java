@@ -62,7 +62,7 @@ public class CheckTicketsService extends IntentService {
                     if (cine.isBookingOpen()) continue;
 
                     Calendar c = Calendar.getInstance();
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd:MMMM:yyyy HH:mm:ss a");
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMM-yyyy HH:mm:ss");
                     String strDate = sdf.format(c.getTime());
 
                     if (FdfsDataProvider.isBookingOpenForTheDay(URL, movies.getDate())) {
