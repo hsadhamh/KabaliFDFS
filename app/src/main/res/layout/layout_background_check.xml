@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
 
     <com.rey.material.widget.TextView
         android:layout_width="match_parent"
@@ -15,10 +14,22 @@
         android:text="Movie Name"
         android:textSize="25sp"
         android:textStyle="bold|normal|italic" />
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adViewCheckPage"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="#ffffff"
+        android:visibility="gone"
+        custom:adUnitId="@string/banner_ad_unit_id"
+        custom:adSize="BANNER" />
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/id_view_movie_name"
+        android:layout_above="@id/adViewCheckPage">
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -32,4 +43,5 @@
             android:id="@+id/id_fab_stop"
             android:src="@drawable/ic_stop_white_24dp"/>
     </FrameLayout>
-</LinearLayout>
+
+</RelativeLayout>

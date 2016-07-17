@@ -8,10 +8,15 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.clans.fab.FloatingActionButton;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.rey.material.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -44,8 +49,12 @@ public class BackgroundCheckActivity extends AppCompatActivity{
 
     @BindView(R.id.id_fab_stop)
     FloatingActionButton mFab;
+    @BindView(R.id.adViewCheckPage)
+    AdView adView;
 
     MovieInTheatresInfo mMovies = null;
+
+    private InterstitialAd interstitial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +62,33 @@ public class BackgroundCheckActivity extends AppCompatActivity{
         setContentView(R.layout.layout_background_check);
         ButterKnife.bind(this);
         updateUI();
+
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                adView.setVisibility(View.VISIBLE);
+            }
+        });
+
+        AdRequest adRequest = new AdRequest.Builder()
+                // Add a test device to show Test Ads
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("CC5F2C72DF2B356BBF0DA198") //Random Text
+                .build();
+        adView.loadAd(adRequest);
+
+        // Prepare the Interstitial Ad
+        interstitial = new InterstitialAd(BackgroundCheckActivity.this);
+        interstitial.setAdUnitId("ca-app-pub-123456789/123456789");
+        interstitial.loadAd(adRequest);
+        interstitial.setAdListener(new AdListener() {
+            public void onAdLoaded() {
+                if (interstitial.isLoaded()) {
+                    interstitial.show();
+                }
+            }
+        });
     }
 
     @OnClick(R.id.id_fab_stop)
@@ -143,5 +179,16 @@ public class BackgroundCheckActivity extends AppCompatActivity{
         } catch (JSONException | IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public void finish(){
+        AdRequest adRequest = new AdRequest.Builder()
+            // Add a test device to show Test Ads
+            .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+            .addTestDevice("abc") //Random Text
+            .build();
+        // Load ads into Interstitial Ads
+        interstitial.loadAd(adRequest);
+        super.finish();
     }
 }

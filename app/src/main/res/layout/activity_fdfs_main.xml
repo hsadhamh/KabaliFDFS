@@ -1,100 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:custom="http://schemas.android.com/apk/res-auto">
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        xmlns:tools="http://schemas.android.com/tools"
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="#ffffff"
+        android:visibility="gone"
+        custom:adUnitId="@string/banner_ad_unit_id"
+        custom:adSize="BANNER" />
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/adView"
         xmlns:custom="http://schemas.android.com/apk/res-auto"
-        tools:context=".activity.FdfsMainActivity">
+        android:visibility="visible">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=" Find - FDFS(First Day First Show) Availability"
-            android:id="@+id/id_txt_find_fdfs"
-            android:gravity="center"
-            android:padding="5dp"
-            android:textAlignment="gravity"
-            android:textSize="18sp"
-            android:textStyle="bold|normal" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=" Select a city:"
-            android:id="@+id/id_txt_city"/>
-        <com.rey.material.widget.Spinner
-            android:id="@+id/spinner_cities"
-            style="@style/Material.Widget.Spinner"
-            android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:gravity="center|start"
-            custom:rd_style="@style/Material.Drawable.Ripple.Wave"
-            android:layout_gravity="center"
-            android:spinnerMode="dialog" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=" Select a Movie:"
-            android:id="@+id/id_txt_movies" />
-        <com.rey.material.widget.Spinner
-            android:id="@+id/spinner_movies"
-            style="@style/Material.Widget.Spinner"
-            android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:gravity="center|start"
-            custom:rd_style="@style/Material.Drawable.Ripple.Wave"
-            android:layout_gravity="center"
-            android:spinnerMode="dialog"
-            android:minHeight="40dp" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <com.rey.material.widget.TextView
-                android:id="@+id/txt_booking_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="6"
-                style="@style/Material.Widget.EditText"
-                android:textSize="18sp"
-                android:gravity="center|start"
-                android:padding="3dp" />
-            <com.rey.material.widget.ImageButton
-                android:id="@+id/btn_calendar_click"
-                android:background="#f0e0e0"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:src="@drawable/ic_calendar_grey600_24dp"
-                android:layout_gravity="end"
-                android:layout_weight="1" />
-        </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=" Select a Cinema:" />
-        <com.rey.material.widget.ListView
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/spinner_cinemas"
-            android:gravity="center|start"
-            android:layout_weight="1"
-            custom:rd_style="@style/Material.Drawable.Ripple.Wave"
-            android:layout_gravity="center"/>
+            xmlns:custom="http://schemas.android.com/apk/res-auto"
+            tools:context=".activity.FdfsMainActivity">
 
-    </LinearLayout>
-    <com.github.clans.fab.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:id="@+id/id_fab_next_screen"
-        android:src="@drawable/ic_chevron_double_right_white_24dp"/>
-</FrameLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=" Find - FDFS(First Day First Show) Availability"
+                android:id="@+id/id_txt_find_fdfs"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textAlignment="gravity"
+                android:textSize="18sp"
+                android:textStyle="bold|normal" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=" Select a city:"
+                android:id="@+id/id_txt_city"/>
+            <com.rey.material.widget.Spinner
+                android:id="@+id/spinner_cities"
+                style="@style/Material.Widget.Spinner"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:gravity="center|start"
+                custom:rd_style="@style/Material.Drawable.Ripple.Wave"
+                android:layout_gravity="center"
+                android:spinnerMode="dialog" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=" Select a Movie:"
+                android:id="@+id/id_txt_movies" />
+            <com.rey.material.widget.Spinner
+                android:id="@+id/spinner_movies"
+                style="@style/Material.Widget.Spinner"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:gravity="center|start"
+                custom:rd_style="@style/Material.Drawable.Ripple.Wave"
+                android:layout_gravity="center"
+                android:spinnerMode="dialog"
+                android:minHeight="40dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.rey.material.widget.TextView
+                    android:id="@+id/txt_booking_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    style="@style/Material.Widget.EditText"
+                    android:textSize="18sp"
+                    android:gravity="center|start"
+                    android:padding="3dp" />
+                <com.rey.material.widget.ImageButton
+                    android:id="@+id/btn_calendar_click"
+                    android:background="#f0e0e0"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:src="@drawable/ic_calendar_grey600_24dp"
+                    android:layout_gravity="end"
+                    android:layout_weight="1" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=" Select a Cinema:" />
+            <com.rey.material.widget.ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/spinner_cinemas"
+                android:gravity="center|start"
+                android:layout_weight="1"
+                custom:rd_style="@style/Material.Drawable.Ripple.Wave"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+        <com.github.clans.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:id="@+id/id_fab_next_screen"
+            android:src="@drawable/ic_chevron_double_right_white_24dp"/>
+    </FrameLayout>
+
+</RelativeLayout>

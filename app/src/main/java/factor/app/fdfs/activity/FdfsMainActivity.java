@@ -13,6 +13,10 @@ import android.widget.ArrayAdapter;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.clans.fab.FloatingActionButton;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.rey.material.widget.ImageButton;
 import com.rey.material.widget.ListView;
 import com.rey.material.widget.Spinner;
@@ -60,6 +64,10 @@ public class FdfsMainActivity extends AppCompatActivity {
     ImageButton calendar;
     @BindView(R.id.txt_booking_date)
     TextView mTxtDate;
+    @BindView(R.id.adView)
+    AdView adView;
+
+    InterstitialAd interstitial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +97,33 @@ public class FdfsMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ShowDatePicker();
+            }
+        });
+
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                adView.setVisibility(View.VISIBLE);
+            }
+        });
+        // Request for Ads
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("CC5F2C72DF2B356BBF0DA198") //Random Text
+                .build();
+        // Load ads into Banner Ads
+        adView.loadAd(adRequest);
+
+        // Prepare the Interstitial Ad
+        interstitial = new InterstitialAd(FdfsMainActivity.this);
+        interstitial.setAdUnitId("ca-app-pub-123456789/123456789");
+        interstitial.loadAd(adRequest);
+        interstitial.setAdListener(new AdListener() {
+            public void onAdLoaded() {
+                if (interstitial.isLoaded()) {
+                    interstitial.show();
+                }
             }
         });
     }
