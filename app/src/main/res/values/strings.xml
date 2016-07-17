@@ -1,4 +1,65 @@
 <resources>
     <string name="app_name">First Day First Show</string>
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string-array name="cities">
+        <item>Not Set</item>
+        <item>National Capital Region (NCR)</item>
+        <item>Mumbai</item>
+        <item>Pune</item>
+        <item>Bengaluru</item>
+        <item>Chennai</item>
+        <item>Hyderabad</item>
+        <item>Kolkata</item>
+        <item>Ambur</item>
+        <item>Ariyalur</item>
+        <item>Arni</item>
+        <item>Aruppukottai</item>
+        <item>Batlagundu</item>
+        <item>Bodinayakanur</item>
+        <item>Chidambaram</item>
+        <item>Coimbatore</item>
+        <item>Cuddalore</item>
+        <item>Cumbum</item>
+        <item>Devakottai</item>
+        <item>Dharapuram</item>
+        <item>Dharmapuri</item>
+        <item>Dindigul</item>
+        <item>Erode</item>
+        <item>Gobichettipalayam</item>
+        <item>Gudiyatham</item>
+        <item>Idappadi</item>
+        <item>Kalakkadu</item>
+        <item>Kanchipuram</item>
+        <item>Komarapalayam</item>
+        <item>Krishnagiri</item>
+        <item>Kumbakonam</item>
+        <item>Madurai</item>
+        <item>Mettuppalayam</item>
+        <item>Nagapattinam</item>
+        <item>Namakkal</item>
+        <item>Natham</item>
+        <item>Nilakottai</item>
+        <item>Oddanchatram</item>
+        <item>Ooty</item>
+        <item>Palani</item>
+        <item>Pattukkottai</item>
+        <item>Pollachi</item>
+        <item>Pondicherry</item>
+        <item>Pudhukottai</item>
+        <item>Ranipet</item>
+        <item>Salem</item>
+        <item>Sivagangai</item>
+        <item>Sivakasi</item>
+        <item>Tanjore</item>
+        <item>Tenkasi</item>
+        <item>Tiruchendur</item>
+        <item>Tirunelveli</item>
+        <item>Tirupattur</item>
+        <item>Tirupur</item>
+        <item>Trichy</item>
+        <item>Tuticorin</item>
+        <item>Usilampatti</item>
+        <item>Vaniyambadi</item>
+        <item>Vellore</item>
+    </string-array>
 </resources>

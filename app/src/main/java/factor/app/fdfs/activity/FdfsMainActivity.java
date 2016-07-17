@@ -75,6 +75,8 @@ public class FdfsMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fdfs_main);
         ButterKnife.bind(this);
 
+        mStrCities = getResources().getStringArray(R.array.cities);
+
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
@@ -129,13 +131,14 @@ public class FdfsMainActivity extends AppCompatActivity {
     }
 
     public void SelectedCity(int position){
-        if(position == 0)
-            return;
-        String sCity = mStrCities[position];
-        Log.d("City Selected ", sCity);
-        mCityName = sCity;
-        if(!sCity.equals("Not Set")) {
-            new BackgroundOps().execute();
+        if(position > 0) {
+            String sCity = mStrCities[position];
+            if(position == 1) sCity = "national-capital-region-ncr";
+            Log.d("City Selected ", sCity);
+            mCityName = sCity.toLowerCase();
+            if (!sCity.equals("Not Set")) {
+                new BackgroundOps().execute();
+            }
         }
     }
 
