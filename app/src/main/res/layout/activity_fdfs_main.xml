@@ -70,8 +70,9 @@
                 android:padding="3dp" />
             <com.rey.material.widget.ImageButton
                 android:id="@+id/btn_calendar_click"
+                android:background="#f0e0e0"
                 android:layout_width="45dp"
-                android:layout_height="match_parent"
+                android:layout_height="45dp"
                 android:src="@drawable/ic_calendar_grey600_24dp"
                 android:layout_gravity="end"
                 android:layout_weight="1" />

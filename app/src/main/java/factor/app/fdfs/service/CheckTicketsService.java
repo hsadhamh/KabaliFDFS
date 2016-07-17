@@ -1,7 +1,14 @@
 package factor.app.fdfs.service;
 
+import android.annotation.TargetApi;
 import android.app.IntentService;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
@@ -12,6 +19,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import factor.app.fdfs.R;
+import factor.app.fdfs.activity.FactorSplashScreen;
 import factor.app.fdfs.models.CinemaInfo;
 import factor.app.fdfs.providers.FdfsDataProvider;
 import factor.app.fdfs.models.MovieInTheatresInfo;
@@ -70,6 +79,14 @@ public class CheckTicketsService extends IntentService {
                         if (FdfsDataProvider.isBookingOpenForTheMovie(URL, movies.getDate(), movies.getMovie().getMovieID())) {
                             cine.setCinemaStatus(strDate + ": Booking Open for the day & movie.");
                             cine.setBookingOpen(true);
+                            if(!cine.isAlreadyNotified()){
+                                //  create notification now.
+                                String str = "Booking open for the movie ["+
+                                        movies.getMovie().getName()+"] on the selected date in the theatre ["+
+                                        cine.getCinemaName() +"].";
+                                CreateNotification(str);
+                                cine.setAlreadyNotified(true);
+                            }
                         }
                     }
                     else
@@ -85,5 +102,34 @@ public class CheckTicketsService extends IntentService {
             }
         }
         this.stopSelf();
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public void CreateNotification(String content){
+        // Prepare intent which is triggered if the
+        // notification is selected
+        Intent intent = new Intent(this, FactorSplashScreen.class);
+        PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
+
+        Notification notification = new Notification();
+        notification.defaults |= Notification.DEFAULT_SOUND;
+        notification.defaults |= Notification.DEFAULT_VIBRATE;
+        // Build notification
+        // Actions are just fake
+        Notification noti = new NotificationCompat.Builder(this)
+                .setContentTitle("Bookings Open")
+                .setContentIntent(pIntent)
+                .setSmallIcon(R.drawable.ic_movie_white_24dp)
+                .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
+                .setLights(Color.RED, 3000, 3000)
+                .setDefaults(notification.defaults)
+                .setStyle(new
+                        NotificationCompat.BigTextStyle()
+                        .bigText("Bookings open in one of the selected theatres. HURRY TO BOOK NOW!!!"))
+                .build();
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        // hide the notification after its selected
+        noti.flags |= Notification.FLAG_AUTO_CANCEL;
+        notificationManager.notify(0, noti);
     }
 }

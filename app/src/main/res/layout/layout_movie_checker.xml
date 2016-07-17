@@ -4,6 +4,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:id="@+id/id_view_holder"
+    android:padding="5dp"
     android:layout_height="wrap_content">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="match_parent"
@@ -32,13 +33,19 @@
 
     </LinearLayout>
     <com.rey.material.widget.ProgressView
-        android:padding="15dp"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         custom:pv_autostart="true"
         custom:pv_circular="true"
         custom:pv_progressStyle="@style/Material.Drawable.CircularProgress"
         custom:pv_progressMode="indeterminate"
         android:layout_weight="1"
         android:id="@+id/id_progress_theatre" />
+    <com.rey.material.widget.ImageView
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:visibility="gone"
+        android:layout_weight="1"
+        android:src="@drawable/ic_check_black_24dp"
+        android:id="@+id/id_tick_complete" />
 </LinearLayout>

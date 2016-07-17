@@ -65,17 +65,19 @@ public class FdfsMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fdfs_main);
-        ButterKnife.setDebug(true);
         ButterKnife.bind(this);
+
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        mTxtDate.setText(String.format("%02d", day) + "-" + String.format("%02d", month) + "-" + year);
 
         ArrayAdapter<String> spFoodAdapter = new ArrayAdapter<String>(getApplicationContext(),
                 R.layout.layout_spinner_item, mStrCities);
         spFoodAdapter.setDropDownViewResource(R.layout.layout_spinner_item);
         mSpinnerCities.setAdapter(spFoodAdapter);
-
         mSpinnerCinemas.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-
-
         mSpinnerCities.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(Spinner parent, View view, int position, long id) {
@@ -86,7 +88,7 @@ public class FdfsMainActivity extends AppCompatActivity {
         calendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ShowDatePicker();
             }
         });
     }
@@ -234,15 +236,13 @@ public class FdfsMainActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.btn_calendar_click)
     public void ShowDatePicker(){
         final Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR);
         int mMonth = c.get(Calendar.MONTH);
         int mDay = c.get(Calendar.DAY_OF_MONTH);
 
-
-        android.app.DatePickerDialog datePickerDialog = new android.app.DatePickerDialog(getApplicationContext(),
+        android.app.DatePickerDialog datePickerDialog = new android.app.DatePickerDialog(FdfsMainActivity.this,
                 new android.app.DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(android.widget.DatePicker view, int year,
@@ -250,6 +250,7 @@ public class FdfsMainActivity extends AppCompatActivity {
                         mTxtDate.setText(String.format("%02d", dayOfMonth) + "-" + String.format("%02d", monthOfYear + 1) + "-" + year);
                     }
                 }, mYear, mMonth, mDay);
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         datePickerDialog.show();
     }
 }

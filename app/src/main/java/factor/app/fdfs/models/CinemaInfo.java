@@ -22,6 +22,17 @@ public class CinemaInfo implements Parcelable{
     @JsonIgnoreProperties(ignoreUnknown=true)
     @JsonProperty("theatre-open")
     boolean bookingOpen;
+    @JsonIgnoreProperties(ignoreUnknown=true)
+    @JsonProperty("notify-done")
+    boolean alreadyNotified;
+
+    public boolean isAlreadyNotified() {
+        return alreadyNotified;
+    }
+
+    public void setAlreadyNotified(boolean alreadyNotified) {
+        this.alreadyNotified = alreadyNotified;
+    }
 
     public String getCinemaStatus() {
         return CinemaStatus;
@@ -44,6 +55,7 @@ public class CinemaInfo implements Parcelable{
         CinemaLink = in.readString();
         CinemaStatus = in.readString();
         bookingOpen = false;
+        alreadyNotified = false;
     }
 
     public static final Creator<CinemaInfo> CREATOR = new Creator<CinemaInfo>() {

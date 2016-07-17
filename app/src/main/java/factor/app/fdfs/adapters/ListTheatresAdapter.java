@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.rey.material.widget.ImageView;
 import com.rey.material.widget.ProgressView;
 import com.rey.material.widget.TextView;
 
@@ -42,10 +43,14 @@ public class ListTheatresAdapter extends RecyclerView.Adapter<ListTheatresAdapte
             holder.status.setText("Will be updated soon...");
         else
             holder.status.setText(movie.getCinemaStatus());
-        if(movie.isBookingOpen())
+        if(movie.isBookingOpen()) {
             holder.statusView.setVisibility(View.GONE);
-        else
+            holder.imgTick.setVisibility(View.VISIBLE);
+        }
+        else {
             holder.statusView.setVisibility(View.VISIBLE);
+            holder.imgTick.setVisibility(View.GONE);
+        }
 
         holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +77,8 @@ public class ListTheatresAdapter extends RecyclerView.Adapter<ListTheatresAdapte
 
         @BindView(R.id.id_progress_theatre)
         ProgressView statusView;
+        @BindView(R.id.id_tick_complete)
+        ImageView imgTick;
 
         @BindView(R.id.id_view_holder)
         LinearLayout mLayout;
