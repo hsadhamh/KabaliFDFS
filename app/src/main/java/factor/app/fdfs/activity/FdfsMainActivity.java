@@ -115,12 +115,12 @@ public class FdfsMainActivity extends AppCompatActivity {
                 .addTestDevice("CC5F2C72DF2B356BBF0DA198") //Random Text
                 .build();
         // Load ads into Banner Ads
-        adView.loadAd(adRequest);
+        //adView.loadAd(adRequest);
 
         // Prepare the Interstitial Ad
         interstitial = new InterstitialAd(FdfsMainActivity.this);
         interstitial.setAdUnitId("ca-app-pub-123456789/123456789");
-        interstitial.loadAd(adRequest);
+        //interstitial.loadAd(adRequest);
         interstitial.setAdListener(new AdListener() {
             public void onAdLoaded() {
                 if (interstitial.isLoaded()) {
@@ -147,13 +147,16 @@ public class FdfsMainActivity extends AppCompatActivity {
         boolean internetCOnnection = false;
         @Override
         protected void onPreExecute() {
-            super.onPreExecute();
-            dialog = new MaterialDialog.Builder(FdfsMainActivity.this)
-                    .content("Loading Movies & Cinemas...")
-                    .progress(true, 0)
-                    .cancelable(false)
-                    .progressIndeterminateStyle(false).show();
-            dialog.show();
+            try{
+                super.onPreExecute();
+                dialog = new MaterialDialog.Builder(FdfsMainActivity.this)
+                        .content("Loading Movies & Cinemas...")
+                        .progress(true, 0)
+                        .cancelable(false)
+                        .progressIndeterminateStyle(false).show();
+                dialog.show();
+            }
+            catch(Exception e){ e.printStackTrace(); }
         }
 
         private boolean isNetworkConnected() {
@@ -192,48 +195,49 @@ public class FdfsMainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            if(!internetCOnnection)
-            {
-                new MaterialDialog
-                        .Builder(FdfsMainActivity.this)
-                        .title("No Internet Connection")
-                        .content("Please check your internet connection.")
-                        .positiveText("OK")
-                        .show();
-                dialog.dismiss();
-                mSpinnerCities.setSelection(0);
-                return;
-            }
-            if(mListMovies.isEmpty() || mListCinemas.isEmpty())
-            {
-                String sStr = "";
-                if(mListCinemas.isEmpty())
-                    sStr = "Cinemas";
-                else if(mListMovies.isEmpty())
-                    sStr = "Movies";
-                new MaterialDialog
-                        .Builder(FdfsMainActivity.this)
-                        .title("Failed to get ["+sStr+"].")
-                        .content("Please contact app administrator.")
-                        .positiveText("OK")
-                        .show();
-                dialog.dismiss();
-                mSpinnerCities.setSelection(0);
-                return;
-            }
-            MoviesSpinnerAdapter adapter = new MoviesSpinnerAdapter(getApplicationContext(), R.layout.layout_spinner_item, mListMovies);
-            mSpinnerMovies.setAdapter(adapter);
-
-            final CinemasAdapter CineAdapter = new CinemasAdapter(getApplicationContext(), R.layout.layout_list_item, mListCinemas);
-            mSpinnerCinemas.setAdapter(CineAdapter);
-            mSpinnerCinemas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    CineAdapter.toggleSelection(position);
+            try {
+                super.onPostExecute(result);
+                if (!internetCOnnection) {
+                    new MaterialDialog
+                            .Builder(FdfsMainActivity.this)
+                            .title("No Internet Connection")
+                            .content("Please check your internet connection.")
+                            .positiveText("OK")
+                            .show();
+                    dialog.dismiss();
+                    mSpinnerCities.setSelection(0);
+                    return;
                 }
-            });
-            dialog.dismiss();
+                if (mListMovies.isEmpty() || mListCinemas.isEmpty()) {
+                    String sStr = "";
+                    if (mListCinemas.isEmpty())
+                        sStr = "Cinemas";
+                    else if (mListMovies.isEmpty())
+                        sStr = "Movies";
+                    new MaterialDialog
+                            .Builder(FdfsMainActivity.this)
+                            .title("Failed to get [" + sStr + "].")
+                            .content("Please contact app administrator.")
+                            .positiveText("OK")
+                            .show();
+                    dialog.dismiss();
+                    mSpinnerCities.setSelection(0);
+                    return;
+                }
+                MoviesSpinnerAdapter adapter = new MoviesSpinnerAdapter(getApplicationContext(), R.layout.layout_spinner_item, mListMovies);
+                mSpinnerMovies.setAdapter(adapter);
+
+                final CinemasAdapter CineAdapter = new CinemasAdapter(getApplicationContext(), R.layout.layout_list_item, mListCinemas);
+                mSpinnerCinemas.setAdapter(CineAdapter);
+                mSpinnerCinemas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        CineAdapter.toggleSelection(position);
+                    }
+                });
+                dialog.dismiss();
+            }
+            catch(Exception e){ e.printStackTrace(); }
         }
 
     }

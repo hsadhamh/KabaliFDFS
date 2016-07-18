@@ -76,12 +76,12 @@ public class BackgroundCheckActivity extends AppCompatActivity{
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("CC5F2C72DF2B356BBF0DA198") //Random Text
                 .build();
-        adView.loadAd(adRequest);
+       // adView.loadAd(adRequest);
 
         // Prepare the Interstitial Ad
         interstitial = new InterstitialAd(BackgroundCheckActivity.this);
         interstitial.setAdUnitId("ca-app-pub-123456789/123456789");
-        interstitial.loadAd(adRequest);
+        //interstitial.loadAd(adRequest);
         interstitial.setAdListener(new AdListener() {
             public void onAdLoaded() {
                 if (interstitial.isLoaded()) {
@@ -188,7 +188,7 @@ public class BackgroundCheckActivity extends AppCompatActivity{
             .addTestDevice("abc") //Random Text
             .build();
         // Load ads into Interstitial Ads
-        interstitial.loadAd(adRequest);
+       // interstitial.loadAd(adRequest);
         super.finish();
     }
 }
