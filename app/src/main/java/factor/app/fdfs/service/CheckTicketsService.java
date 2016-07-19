@@ -50,6 +50,7 @@ public class CheckTicketsService extends IntentService {
         }
         else {
             Log.d("debug-service", "Loading and updating movie info.");
+            WakefulBroadcastReceiver.completeWakefulIntent(intent);
             MovieInTheatresInfo movies = null;
             if (!FdfsDataProvider.doesFileExists(getApplicationContext())) {
                 FdfsDataProvider.cancelAlarm(getApplicationContext());
@@ -65,6 +66,8 @@ public class CheckTicketsService extends IntentService {
 
                 if (movies == null) return;
 
+                int nTheatreID = 1250;
+
                 for (CinemaInfo cine : movies.getCinemas()) {
                     String URL = FdfsDataProvider.mStrBookMyShow + movies.getCity() + cine.getCinemaLink();
 
@@ -75,22 +78,23 @@ public class CheckTicketsService extends IntentService {
                     String strDate = sdf.format(c.getTime());
 
                     if (FdfsDataProvider.isBookingOpenForTheDay(URL, movies.getDate())) {
-                        cine.setCinemaStatus(strDate + ": Booking Open for the day. Not yet for movie.");
+                        cine.setCinemaStatus("[" + strDate + "]: Booking Open for the day. Not yet for movie.");
                         if (FdfsDataProvider.isBookingOpenForTheMovie(URL, movies.getDate(), movies.getMovie().getMovieID())) {
-                            cine.setCinemaStatus(strDate + ": Booking Open for the day & movie.");
+                            cine.setCinemaStatus("[" + strDate + "]: Booking Open for the day & movie.");
                             cine.setBookingOpen(true);
                             if(!cine.isAlreadyNotified()){
                                 //  create notification now.
                                 String str = "Booking open for the movie ["+
                                         movies.getMovie().getName()+"] on the selected date in the theatre ["+
                                         cine.getCinemaName() +"].";
-                                CreateNotification(str);
+                                CreateNotification(str, nTheatreID, cine.getCinemaName());
                                 cine.setAlreadyNotified(true);
                             }
                         }
                     }
                     else
                         cine.setCinemaStatus(strDate +": Could not find booking for given date.");
+                    nTheatreID++;
                 }
 
                 String s = FdfsDataProvider.getSavedInfoString(movies);
@@ -105,11 +109,11 @@ public class CheckTicketsService extends IntentService {
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public void CreateNotification(String content){
+    public void CreateNotification(String content, int notifyID, String cinemaName){
         // Prepare intent which is triggered if the
         // notification is selected
         Intent intent = new Intent(this, FactorSplashScreen.class);
-        PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
+        PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, notifyID);
 
         Notification notification = new Notification();
         notification.defaults |= Notification.DEFAULT_SOUND;
@@ -117,19 +121,20 @@ public class CheckTicketsService extends IntentService {
         // Build notification
         // Actions are just fake
         Notification noti = new NotificationCompat.Builder(this)
-                .setContentTitle("Bookings Open")
+                .setContentTitle("Bookings Open Now!!!")
+                .setContentText("Booking open in theatre [ " + cinemaName + "].")
                 .setContentIntent(pIntent)
                 .setSmallIcon(R.drawable.ic_movie_white_24dp)
                 .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
-                .setLights(Color.RED, 3000, 3000)
+                .setLights(Color.MAGENTA, 3000, 3000)
                 .setDefaults(notification.defaults)
                 .setStyle(new
                         NotificationCompat.BigTextStyle()
-                        .bigText("Bookings open in one of the selected theatres. HURRY TO BOOK NOW!!!"))
+                        .bigText(content))
                 .build();
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         // hide the notification after its selected
         noti.flags |= Notification.FLAG_AUTO_CANCEL;
-        notificationManager.notify(0, noti);
+        notificationManager.notify(notifyID, noti);
     }
 }
