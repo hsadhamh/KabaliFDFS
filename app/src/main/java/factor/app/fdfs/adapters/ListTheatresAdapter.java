@@ -19,6 +19,7 @@ import factor.app.fdfs.events.OpenBookMyShowEvent;
 import factor.app.fdfs.models.CinemaInfo;
 import factor.app.fdfs.models.MovieInTheatresInfo;
 import factor.app.fdfs.R;
+import factor.app.fdfs.providers.Typefaces;
 
 /**
  * Created by hassanhussain on 7/16/2016.
@@ -86,6 +87,9 @@ public class ListTheatresAdapter extends RecyclerView.Adapter<ListTheatresAdapte
         public TheatreHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            theatreName.setTypeface(Typefaces.getRobotoMedium(itemView.getContext()));
+            status.setTypeface(Typefaces.getRobotoMedium(itemView.getContext()));
         }
     }
 }

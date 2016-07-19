@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import factor.app.fdfs.models.MovieInfo;
 import factor.app.fdfs.R;
+import factor.app.fdfs.providers.Typefaces;
 
 /**
  * Created by hassanhussain on 7/16/2016.
@@ -60,6 +61,7 @@ public class MoviesSpinnerAdapter extends ArrayAdapter<MovieInfo> {
             convertView = mInflater.inflate(R.layout.layout_spinner_item, null);
         }
         TextView mTxt = (TextView)convertView.findViewById(R.id.id_txt_show_movie);
+        mTxt.setTypeface(Typefaces.getRobotoMedium(mContext));
         MovieInfo movie = getItem(position);
 
         String movieShow = "<b>" + movie.getName() + "</b>, " + "<i>"
@@ -75,6 +77,7 @@ public class MoviesSpinnerAdapter extends ArrayAdapter<MovieInfo> {
 
         MoviesHolder(View v){
             ButterKnife.bind(this, v);
+            mTxt.setTypeface(Typefaces.getRobotoMedium(mContext));
         }
     }
 }

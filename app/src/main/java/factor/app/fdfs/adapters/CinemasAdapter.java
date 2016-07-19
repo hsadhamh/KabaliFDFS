@@ -18,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import factor.app.fdfs.models.CinemaInfo;
 import factor.app.fdfs.R;
+import factor.app.fdfs.providers.Typefaces;
 
 /**
  * Created by hassanhussain on 7/16/2016.
@@ -41,6 +42,18 @@ public class CinemasAdapter extends ArrayAdapter<CinemaInfo> {
         mSelectedItemsIds = new SparseBooleanArray();
         for(int i=0; i<mListMovies.size(); i++)
             mSelectedItemsIds.put(i, false);
+    }
+
+    public void selectAll(){
+        for(int i=0; i<mListMovies.size(); i++)
+            mSelectedItemsIds.put(i, true);
+        notifyDataSetChanged();
+    }
+
+    public void deSelectAll(){
+        for(int i=0; i<mListMovies.size(); i++)
+            mSelectedItemsIds.put(i, false);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -74,6 +87,7 @@ public class CinemasAdapter extends ArrayAdapter<CinemaInfo> {
 
         MoviesHolder(View v){
             ButterKnife.bind(this, v);
+            mTxt.setTypeface(Typefaces.getRobotoMedium(mContext));
         }
 
         public void setCheckedState(boolean b){

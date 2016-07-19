@@ -10,6 +10,7 @@
         android:layout_gravity="center|start"
         android:gravity="center|start"
         android:id="@+id/id_check_box_item"
+        android:enabled="false"
         android:minHeight="?android:attr/listPreferredItemHeight" />
 
     <com.rey.material.widget.TextView

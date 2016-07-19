@@ -35,6 +35,7 @@ import factor.app.fdfs.R;
 import factor.app.fdfs.events.UpdateUiEvent;
 import factor.app.fdfs.adapters.ListTheatresAdapter;
 import factor.app.fdfs.models.MovieInTheatresInfo;
+import factor.app.fdfs.providers.Typefaces;
 
 /**
  * Created by hassanhussain on 7/16/2016.
@@ -55,6 +56,7 @@ public class BackgroundCheckActivity extends AppCompatActivity{
     MovieInTheatresInfo mMovies = null;
 
     private InterstitialAd interstitial;
+    AdRequest adRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,19 +73,18 @@ public class BackgroundCheckActivity extends AppCompatActivity{
             }
         });
 
-        AdRequest adRequest = new AdRequest.Builder()
-                // Add a test device to show Test Ads
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("CC5F2C72DF2B356BBF0DA198") //Random Text
+       adRequest = new AdRequest
+                .Builder()
+                //.addTestDevice("F3D0EE493657AD2952233060D190BFBF")
                 .build();
-       // adView.loadAd(adRequest);
+        adView.loadAd(adRequest);
 
         // Prepare the Interstitial Ad
         interstitial = new InterstitialAd(BackgroundCheckActivity.this);
-        interstitial.setAdUnitId("ca-app-pub-123456789/123456789");
-        //interstitial.loadAd(adRequest);
+        interstitial.setAdUnitId("ca-app-pub-7462033170287511/2315398584");
         interstitial.setAdListener(new AdListener() {
             public void onAdLoaded() {
+                super.onAdLoaded();
                 if (interstitial.isLoaded()) {
                     interstitial.show();
                 }
@@ -168,6 +169,7 @@ public class BackgroundCheckActivity extends AppCompatActivity{
 
             if(mMovies != null) {
                 mTxtMovieName.setText(mMovies.getMovie().getName() + " ["+ mMovies.getCity() +"]");
+                mTxtMovieName.setTypeface(Typefaces.getRobotoMedium(getApplicationContext()));
 
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -182,13 +184,8 @@ public class BackgroundCheckActivity extends AppCompatActivity{
     }
 
     public void finish(){
-        AdRequest adRequest = new AdRequest.Builder()
-            // Add a test device to show Test Ads
-            .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-            .addTestDevice("abc") //Random Text
-            .build();
         // Load ads into Interstitial Ads
-       // interstitial.loadAd(adRequest);
+        interstitial.loadAd(adRequest);
         super.finish();
     }
 }

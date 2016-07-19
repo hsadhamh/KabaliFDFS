@@ -17,6 +17,7 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.ImageButton;
 import com.rey.material.widget.ListView;
 import com.rey.material.widget.Spinner;
@@ -44,6 +45,7 @@ import factor.app.fdfs.adapters.MoviesSpinnerAdapter;
 import factor.app.fdfs.models.CinemaInfo;
 import factor.app.fdfs.models.MovieInTheatresInfo;
 import factor.app.fdfs.models.MovieInfo;
+import factor.app.fdfs.providers.Typefaces;
 
 public class FdfsMainActivity extends AppCompatActivity {
 
@@ -66,14 +68,22 @@ public class FdfsMainActivity extends AppCompatActivity {
     TextView mTxtDate;
     @BindView(R.id.adView)
     AdView adView;
+    @BindView(R.id.id_select_all)
+    CheckBox mCbSelectAll;
+
+    @BindView(R.id.id_txt_find_fdfs)
+    android.widget.TextView mheading;
 
     InterstitialAd interstitial;
+    AdRequest adRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fdfs_main);
         ButterKnife.bind(this);
+        mheading.setTypeface(Typefaces.getRobotoRegular(getApplicationContext()));
+        mTxtDate.setTypeface(Typefaces.getRobotoRegular(getApplicationContext()));
 
         mStrCities = getResources().getStringArray(R.array.cities);
 
@@ -95,6 +105,22 @@ public class FdfsMainActivity extends AppCompatActivity {
             }
         });
 
+        mCbSelectAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mCbSelectAll.isChecked()) {
+                    mCbSelectAll.setSelected(false);
+                    ((CinemasAdapter)mSpinnerCinemas.getAdapter()).selectAll();
+                }
+                else {
+                    mCbSelectAll.setSelected(true);
+                    ((CinemasAdapter)mSpinnerCinemas.getAdapter()).deSelectAll();
+                }
+            }
+        });
+        mCbSelectAll.setEnabled(false);
+        mCbSelectAll.setTypeface(Typefaces.getRobotoMedium(getApplicationContext()));
+
         calendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,19 +136,19 @@ public class FdfsMainActivity extends AppCompatActivity {
             }
         });
         // Request for Ads
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("CC5F2C72DF2B356BBF0DA198") //Random Text
+        adRequest = new AdRequest
+                .Builder()
+                //.addTestDevice("F3D0EE493657AD2952233060D190BFBF")
                 .build();
         // Load ads into Banner Ads
-        //adView.loadAd(adRequest);
+        adView.loadAd(adRequest);
 
         // Prepare the Interstitial Ad
         interstitial = new InterstitialAd(FdfsMainActivity.this);
-        interstitial.setAdUnitId("ca-app-pub-123456789/123456789");
-        //interstitial.loadAd(adRequest);
+        interstitial.setAdUnitId("ca-app-pub-7462033170287511/2315398584");
         interstitial.setAdListener(new AdListener() {
             public void onAdLoaded() {
+                super.onAdLoaded();
                 if (interstitial.isLoaded()) {
                     interstitial.show();
                 }
@@ -236,6 +262,7 @@ public class FdfsMainActivity extends AppCompatActivity {
                     }
                 });
                 dialog.dismiss();
+                mCbSelectAll.setEnabled(true);
             }
             catch(Exception e){ e.printStackTrace(); }
         }
@@ -294,5 +321,11 @@ public class FdfsMainActivity extends AppCompatActivity {
                 }, mYear, mMonth, mDay);
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         datePickerDialog.show();
+    }
+
+    public void finish(){
+        // Load ads into Interstitial Ads
+        interstitial.loadAd(adRequest);
+        super.finish();
     }
 }
